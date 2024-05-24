@@ -7,7 +7,8 @@
 #include "pico/bootrom.h"
 
 #include "hardware.h"
-#include "ff.h"
+#include "fat.h"
+#include "TOTP-MCU/TOTP.h"
 
 // Numbers extracted from argument string
 uint arg[5];
@@ -42,27 +43,13 @@ static void uf2_cb(int arglen, char* argv) {
     reset_usb_boot(0, 2);
 }
 
-static void listfolder(const char* dir_name, uint8_t current_depth) {
-    DIR dir;
-    FILINFO fileinfo;
-
-    f_opendir(&dir, dir_name);
-    f_readdir(&dir, &fileinfo);
-
-    while (fileinfo.fname[0]) {
-        printf("%*s%s\n", current_depth * 2, "", fileinfo.fname);
-        if (fileinfo.fattrib & AM_DIR) {
-            size_t next_dir_length = strlen(dir_name) + strlen(fileinfo.altname) + 3;
-            char next_dir[next_dir_length];
-            snprintf(next_dir, next_dir_length - 1, "%s/%s", dir_name, fileinfo.altname);
-            listfolder(next_dir, current_depth + 1);
-        }
-        f_readdir(&dir, &fileinfo);
-    }
+void listfolder_cb(int arglen, char* argv) {
+    FAT_ListFolder("/", 0);
 }
 
-void listfolder_cb(int arglen, char* argv) {
-    listfolder("/", 0);
+void totp_cb(int arglen, char* argv) {
+    ExtractParameters(argv);
+    printf("Your TOTP for timestamp %d: %d\n", arg[0], getCodeFromTimestamp(arg[0]));    
 }
 
 
@@ -73,6 +60,7 @@ ShellCommand command_set[] = {
     {"test", test_cb},
     {"uf2", uf2_cb},
     {"ls", listfolder_cb},
+    {"totp", totp_cb},
 
 };
 size_t command_cnt = count_of(command_set);

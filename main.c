@@ -26,8 +26,8 @@ static void blink(void) {
     if (time_us_32() / 1000 > next_blink_ms) {
         next_blink_ms += blink_interval_ms;
         gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(PICO_DEFAULT_LED_PIN));
-        LCD_Clear(colors[color_index++]);
-        if (color_index >= count_of(colors)) color_index = 0;
+        //LCD_Clear(colors[color_index++]);
+        //if (color_index >= count_of(colors)) color_index = 0;
     }
 }
 

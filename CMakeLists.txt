@@ -24,14 +24,17 @@ add_executable(TOTP_Display
     # Main
     main.c
 
-    # Shell
-    system/shell.c
-    system/shell_commands.c
-
     # Hardware
     hardware/hardware.c
     hardware/lcd.c
-    # todo: hardware/rtc.c
+    hardware/rtc.c
+
+    # Shell
+    system/shell.c
+    system/shell_commands.c
+    system/totp.c
+    system/TOTP-MCU/TOTP.c
+    system/TOTP-MCU/sha1.c
 
     # UI
     system/ui/bmp.c
