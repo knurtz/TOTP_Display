@@ -29,11 +29,11 @@
 
 // Display
 #define DISP_SPI        spi1
-#define DISP_CLK        14      // Function F1: SPI0 SCK
-#define DISP_DIN        15      // Function F1: SPI0 TX
+#define DISP_CLK        14      // Function F1: SPI1 SCK
+#define DISP_DIN        15      // Function F1: SPI1 TX
 
-#define DISP_BL         8       // GPIO
-#define DISP_RST        12       // GPIO
+#define DISP_BL         9       // GPIO
+#define DISP_RST        12      // GPIO
 #define DISP_DC         25      // GPIO
 #define DISP_CS	        13      // GPIO
 

@@ -32,7 +32,9 @@ void Hardware_Init(void)
     gpio_init(DISP_BL);
     gpio_set_dir(DISP_BL, GPIO_OUT);
 
+    gpio_init(DISP_DIN);
     gpio_set_function(DISP_DIN, GPIO_FUNC_SPI);
+    gpio_init(DISP_CLK);
     gpio_set_function(DISP_CLK, GPIO_FUNC_SPI);
 
     spi_init(DISP_SPI, 60 MHz);

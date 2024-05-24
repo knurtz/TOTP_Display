@@ -448,7 +448,8 @@ void LCD_Clear(uint16_t color)
 
 void LCD_ClearBuffer(uint16_t color)
 {	
-	memset(lcd_buffer, 0, sizeof(lcd_buffer));
+	//memset(lcd_buffer, color, sizeof(lcd_buffer));
+	for (size_t i = 0; i < count_of(lcd_buffer); i++) lcd_buffer[i] = color;
 }
 
 /******************************************************************************
