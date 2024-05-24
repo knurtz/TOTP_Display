@@ -107,7 +107,7 @@ uint32_t FAT_GetFilesize(const char* filename)
 unsigned int FAT_ReadFileToBuffer(const char* filename, uint32_t offset, uint32_t len, uint8_t* buffer)
 {
     FRESULT res;
-    UINT br;
+    UINT br = 0;
 
     if (!FAT_Init()) return 0;
 

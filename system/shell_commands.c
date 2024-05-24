@@ -8,7 +8,7 @@
 
 #include "hardware.h"
 #include "fat.h"
-#include "TOTP-MCU/TOTP.h"
+#include "totp.h"
 
 // Numbers extracted from argument string
 uint arg[5];
@@ -49,7 +49,11 @@ void listfolder_cb(int arglen, char* argv) {
 
 void totp_cb(int arglen, char* argv) {
     ExtractParameters(argv);
-    printf("Your TOTP for timestamp %d: %d\n", arg[0], getCodeFromTimestamp(arg[0]));    
+    printf("Your TOTP for timestamp %d: %d\n", arg[0], TOTP_GetToken(arg[0]));   
+}
+
+void key_cb(int arglen, char* argv) {
+    TOTP_ReadKeyFromFile(argv);
 }
 
 
@@ -60,7 +64,7 @@ ShellCommand command_set[] = {
     {"test", test_cb},
     {"uf2", uf2_cb},
     {"ls", listfolder_cb},
-    {"totp", totp_cb},
-
+    {"totp token", totp_cb},
+    {"totp key", key_cb}
 };
 size_t command_cnt = count_of(command_set);
