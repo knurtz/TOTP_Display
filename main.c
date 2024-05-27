@@ -15,6 +15,8 @@
 #include "ui/bmp.h"
 #include "ui/font.h"
 
+#include "rtc.h"
+
 uint32_t next_blink_ms = 0;
 uint16_t blink_interval_ms = 500;
 uint16_t blink_interval_fast_ms = 100;
@@ -37,6 +39,8 @@ int main() {
 
     Hardware_Init();
     Shell_Init();
+
+    RTC_Init();
 
     Flash_Init();
     FAT_Init();

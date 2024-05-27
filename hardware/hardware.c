@@ -38,4 +38,13 @@ void Hardware_Init(void)
     gpio_set_function(DISP_CLK, GPIO_FUNC_SPI);
 
     spi_init(DISP_SPI, 60 MHz);
+
+
+    // Init RTC pins and I2C
+    gpio_init(RTC_SCL);
+    gpio_set_function(RTC_SCL, GPIO_FUNC_I2C);
+    gpio_init(RTC_SDA);
+    gpio_set_function(RTC_SDA, GPIO_FUNC_I2C);
+
+    i2c_init(RTC_I2C, 100 kHz);
 }

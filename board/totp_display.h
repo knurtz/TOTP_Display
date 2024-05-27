@@ -38,7 +38,7 @@
 #define DISP_CS	        13      // GPIO
 
 // RTC
-#define RTC_I2C         ic20
+#define RTC_I2C         i2c0
 #define RTC_INT         11
 #define RTC_SCL         1
 #define RTC_SDA         0
