@@ -46,5 +46,9 @@ void Hardware_Init(void)
     gpio_init(RTC_SDA);
     gpio_set_function(RTC_SDA, GPIO_FUNC_I2C);
 
+    gpio_init(RTC_INT);
+    gpio_set_dir(RTC_INT, false);
+    gpio_pull_up(RTC_INT);
+
     i2c_init(RTC_I2C, 100 kHz);
 }

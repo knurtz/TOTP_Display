@@ -17,7 +17,7 @@ void RTC_Init(void) {
         (0b0 << 6) |        // BBSQW - no battery backed square wave
         (0b0 << 5) |        // CONV - force temperature conversion
         (0b00 << 3) |       // RSx - 1 Hz square wave output
-        (0b1 << 2) |        // nINTCN - enable interrupt in nINT/SQW pin
+        (0b1 << 2) |        // INTCN - enable interrupt on nINT/SQW pin
         (0b0 << 1) |        // A2IE - disable alarm 2 interrupt
         (0b1 << 0);         // A1IE - enable alarm 1 interrupt
     RTC_WriteRegister(0x0e, control_reg);
@@ -25,6 +25,16 @@ void RTC_Init(void) {
     // Write status register
     uint8_t status_reg = 0;
     RTC_WriteRegister(0x0f, status_reg);
+
+    // Set alarm to 00/00/0000 - 00:00:00
+    // Also set flags to only copare seconds in order to fire once every minute
+    uint8_t alarm_regs[5];
+    alarm_regs[0] = 0x7;
+    alarm_regs[1] = (0 << 7);
+    alarm_regs[2] = (1 << 7);
+    alarm_regs[3] = (1 << 7);
+    alarm_regs[4] = (1 << 7);    
+    i2c_write_blocking(RTC_I2C, 0b1101000, alarm_regs, 5, false);
 }
 
 uint8_t RTC_ReadRegister(uint8_t addr) {
@@ -44,6 +54,11 @@ void RTC_EnableOscillator(bool enabled) {
     if (enabled) control_reg &= ~(1 << 7);
     else control_reg |= (1 << 7);
     // todo: write register back to RTC
+}
+
+void RTC_ResetInterrupts(void) {
+    uint8_t status_reg = 0;
+    RTC_WriteRegister(0x0f, status_reg);
 }
 
 void RTC_GetTimeStruct(struct tm *time) {

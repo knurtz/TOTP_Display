@@ -33,6 +33,11 @@ static void blink(void) {
     }
 }
 
+void rtc_callback(uint gpio, uint32_t events) {
+    printf("AAAALLLLLAAAAAAAAAARM!!!\n");
+    RTC_ResetInterrupts();
+}
+
 int main() {
     stdio_init_all();
     tusb_init();
@@ -41,6 +46,7 @@ int main() {
     Shell_Init();
 
     RTC_Init();
+    gpio_set_irq_enabled_with_callback(RTC_INT, GPIO_IRQ_EDGE_FALL, true, &rtc_callback);
 
     Flash_Init();
     FAT_Init();
