@@ -14,4 +14,6 @@ void RTC_ResetInterrupts(void);
 void RTC_GetTimeStruct(struct tm *time);
 void RTC_SetTimeStruct(struct tm *time);
 
+void RTC_Interrupt(uint32_t events);
+
 #endif /* RTC_H */

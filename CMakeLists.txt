@@ -28,6 +28,7 @@ add_executable(TOTP_Display
     hardware/hardware.c
     hardware/lcd.c
     hardware/rtc.c
+    hardware/dcf.c
 
     # Shell
     system/shell.c

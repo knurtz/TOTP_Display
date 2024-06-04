@@ -16,6 +16,7 @@
 #include "ui/font.h"
 
 #include "rtc.h"
+#include "dcf.h"
 
 uint32_t next_blink_ms = 0;
 uint16_t blink_interval_ms = 500;
@@ -28,14 +29,7 @@ static void blink(void) {
     if (time_us_32() / 1000 > next_blink_ms) {
         next_blink_ms += blink_interval_ms;
         gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(PICO_DEFAULT_LED_PIN));
-        //LCD_Clear(colors[color_index++]);
-        //if (color_index >= count_of(colors)) color_index = 0;
     }
-}
-
-void rtc_callback(uint gpio, uint32_t events) {
-    printf("AAAALLLLLAAAAAAAAAARM!!!\n");
-    RTC_ResetInterrupts();
 }
 
 int main() {
@@ -45,8 +39,8 @@ int main() {
     Hardware_Init();
     Shell_Init();
 
+    DCF_Init();
     RTC_Init();
-    gpio_set_irq_enabled_with_callback(RTC_INT, GPIO_IRQ_EDGE_FALL, true, &rtc_callback);
 
     Flash_Init();
     FAT_Init();
@@ -58,8 +52,9 @@ int main() {
         tud_task();
         Shell_CheckCommand();
         Flash_WriteCycle(false);
+        DCF_DecodeTelegram();
 
-        blink();
+        //blink();
     }
 
     return 1;

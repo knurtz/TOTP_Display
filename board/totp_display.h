@@ -34,7 +34,7 @@
 
 #define DISP_BL         9       // GPIO
 #define DISP_RST        12      // GPIO
-#define DISP_DC         25      // GPIO
+#define DISP_DC         16      // GPIO
 #define DISP_CS	        13      // GPIO
 
 // RTC
@@ -42,6 +42,10 @@
 #define RTC_INT         11
 #define RTC_SCL         1
 #define RTC_SDA         0
+
+// DCF
+#define DCF_PON         28
+#define DCF_TCO         3
 
 // --- FLASH ---
 

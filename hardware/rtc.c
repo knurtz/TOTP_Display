@@ -7,6 +7,11 @@
 
 #include "rtc.h"
 
+void RTC_Interrupt(uint32_t events) {
+    printf("ALARM!!\n");
+    RTC_ResetInterrupts();
+}
+
 void RTC_Init(void) {
 
     // todo: Sync I2C interface by toggling SCL until SDA reads high
