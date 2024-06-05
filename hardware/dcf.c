@@ -29,15 +29,19 @@ bool DCF_DecodeTelegram(void) {
     return true;
 }
 
-static void DCF_ResetTelegram(void) {
-    if (bit_counter == 59) {
-        //printf("Minute reset\n");
-        last_telegram[0] = current_telegram[0];
-        last_telegram[1] = current_telegram[1];
-        telegram_ready = true;
+static void DCF_ResetTelegram(uint time_delta) {
+    if (time_delta > 1500000) {
+        if (bit_counter == 59) {
+            last_telegram[0] = current_telegram[0];
+            last_telegram[1] = current_telegram[1];
+            telegram_ready = true;
+        }
+        else {
+            printf("Invalid minute, bitcounter: %d, time_delta: %d ms\n", bit_counter, time_delta / 1000);
+        }
     }
     else {
-        printf("Invalid reset\n");
+        printf("Invalid reset, time_delta: %d ms\n", time_delta / 1000);
     }
     bit_counter = 0;
 }
@@ -49,29 +53,31 @@ static inline void DCF_AddBit(bool bit) {
 }
 
 void DCF_Interrupt(uint32_t events) {
-    gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(DCF_TCO));    
+    gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(DCF_TCO));
     uint32_t time_delta = time_us_32() - last_falling_edge;
+    if (time_delta < 50000) return;     // glitch
 
     // Falling edge (signal is inverted)
-    if (gpio_get(DCF_TCO)) {
+    //if (gpio_get(DCF_TCO)) {
+    if (events & GPIO_IRQ_EDGE_RISE) {
         // Last falling edge 2 seconds ago -> minute reset
         if (time_delta > 1500000) {
-            DCF_ResetTelegram();
+            DCF_ResetTelegram(time_delta);
         }
         last_falling_edge = time_us_32();
     }
 
     // Rising edge
     else {
-        // 250 ms - infinty: invalid or minute reset
+        // 250 ms - infinty: invalid
         if (time_delta > 250000) {
-            DCF_ResetTelegram();
+            DCF_ResetTelegram(time_delta);
         }
         // 150 - 250 ms: 200 ms = 1
         else if (time_delta > 150000) {
             DCF_AddBit(1);
         }
-        // 0 - 150 ms: 100 ms = 0
+        // 50 - 150 ms: 100 ms = 0
         else {
             DCF_AddBit(0);
         }
