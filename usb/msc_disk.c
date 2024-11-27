@@ -28,7 +28,7 @@
 
 
 #define README_CONTENTS \
-"TOTP Display mass storage."
+"Mini Display mass storage."
 
 
 const __attribute__((section(".mass_storage")))
@@ -60,7 +60,7 @@ uint8_t msc_disk[DISK_SECTOR_NUM][DISK_SECTOR_SIZE] =
       0x00,                     // Reserved
       0x29,                     // Extended boot signature
       0x34, 0x12, 0x00, 0x00,   // Volume ID (serial number)
-      'T', 'O', 'T', 'P', 'D', 'i', 's', 'p', 'l', 'a', 'y',        // Volume label
+      'M', 'i', 'n', 'i', 'D', 'i', 's', 'p', 'l', 'a', 'y',        // Volume label
       'F', 'A', 'T', '1', '2', ' ', ' ', ' ',                       // File system type
       0x00, 0x00,
 
@@ -109,7 +109,7 @@ uint8_t msc_disk[DISK_SECTOR_NUM][DISK_SECTOR_SIZE] =
   //---------- Sector13: Root Directory 1/3 -----------//
   {
       // first entry is volume label
-      'T' , 'O' , 'T' , 'P' , 'D' , 'i' , 's' , 'p' , 'l' , 'a' , 'y' , 0x08, 0x00, 0x00, 0x00, 0x00,
+      'M' , 'i' , 'n' , 'i' , 'D' , 'i' , 's' , 'p' , 'l' , 'a' , 'y' , 0x08, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4F, 0x6D, 0x65, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       // second entry is readme file
       'R' , 'E' , 'A' , 'D' , 'M' , 'E' , ' ' , ' ' , 'T' , 'X' , 'T' , 0x20, 0x00, 0xC6, 0x52, 0x6D,

@@ -123,11 +123,11 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index)
 char const* string_desc_arr [] =
 {
     (const char[]) { 0x09, 0x04 }, // 0: supported language is English (0x0409)
-    "TOTPDisplay",                 // 1: Manufacturer
-    "TOTPDisplay",                 // 2: Product
+    "MiniDisplay",                 // 1: Manufacturer
+    "MiniDisplay",                 // 2: Product
     "1",                           // 3: Serials, should use chip ID
-    "TOTPDisplay CDC",             // 4: CDC Interface
-    "TOTPDisplay MSC",             // 5: MSC Interface
+    "MiniDisplay CDC",             // 4: CDC Interface
+    "MiniDisplay MSC",             // 5: MSC Interface
 };
 
 static uint16_t _desc_str[32];

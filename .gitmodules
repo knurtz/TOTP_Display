@@ -1,3 +1,0 @@
-[submodule "system/TOTP-MCU"]
-	path = system/TOTP-MCU
-	url = git@github.com:knurtz/TOTP-MCU.git

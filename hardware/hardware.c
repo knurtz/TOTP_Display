@@ -4,21 +4,7 @@
 
 #include "hardware/gpio.h"
 #include "hardware/spi.h"
-#include "hardware/i2c.h"
 
-#include "rtc.h"
-#include "dcf.h"
-
-static void gpio_callback(uint gpio, uint32_t events) {
-    switch (gpio) {
-        case RTC_INT:
-            RTC_Interrupt(events);
-            break;
-        case DCF_TCO:
-            DCF_Interrupt(events);
-            break;
-    }    
-}
 
 void Hardware_Init(void)
 {    
@@ -51,33 +37,6 @@ void Hardware_Init(void)
     gpio_init(DISP_CLK);
     gpio_set_function(DISP_CLK, GPIO_FUNC_SPI);
 
-    spi_init(DISP_SPI, 60 MHz);
+    spi_init(DISP_SPI, 10 MHz);
 
-
-    // Init RTC pins and I2C
-    gpio_init(RTC_SCL);
-    gpio_set_function(RTC_SCL, GPIO_FUNC_I2C);
-    gpio_init(RTC_SDA);
-    gpio_set_function(RTC_SDA, GPIO_FUNC_I2C);
-
-    gpio_init(RTC_INT);
-    gpio_set_dir(RTC_INT, GPIO_IN);
-    gpio_pull_up(RTC_INT);
-
-    i2c_init(RTC_I2C, 100 kHz);
-
-
-    // Init DCF pins
-    gpio_init(DCF_PON);
-    gpio_set_dir(DCF_PON, GPIO_OUT);
-    gpio_put(DCF_PON, 0);       // enabled by default
-
-    gpio_init(DCF_TCO);
-    gpio_set_dir(DCF_TCO, GPIO_IN);
-    gpio_pull_up(DCF_TCO);
-
-    
-    // Enable interrupts for RTC and DCF pins
-    //gpio_set_irq_enabled_with_callback(RTC_INT, GPIO_IRQ_EDGE_FALL, true, &gpio_callback);
-    gpio_set_irq_enabled_with_callback(DCF_TCO, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &gpio_callback); 
 }

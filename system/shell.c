@@ -41,7 +41,7 @@ static void Shell_ExecuteCommand(void)
 void Shell_Init(void)
 {
   Shell_ClearInputBuffer();
-  printf("\nTOTP> ");
+  printf("\nMiniDisplay> ");
 }
 
 // Check receive buffer for newline, indicating the end of a command

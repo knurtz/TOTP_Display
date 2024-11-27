@@ -15,9 +15,6 @@
 #include "ui/bmp.h"
 #include "ui/font.h"
 
-#include "rtc.h"
-#include "dcf.h"
-
 uint32_t next_blink_ms = 0;
 uint16_t blink_interval_ms = 500;
 uint16_t blink_interval_fast_ms = 100;
@@ -39,22 +36,18 @@ int main() {
     Hardware_Init();
     Shell_Init();
 
-    DCF_Init();
-    RTC_Init();
-
     Flash_Init();
     FAT_Init();
 
     //Font_Init();
-    LCD_Init(HORIZONTAL);
+    //LCD_Init(HORIZONTAL);
     
     while (1) {
         tud_task();
         Shell_CheckCommand();
         Flash_WriteCycle(false);
-        DCF_DecodeTelegram();
 
-        //blink();
+        blink();
     }
 
     return 1;
