@@ -1,8 +1,18 @@
+# == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.1.0)
+set(toolchainVersion 13_3_Rel1)
+set(picotoolVersion 2.1.0)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+# ====================================================================================
 cmake_minimum_required(VERSION 3.12)
-
-project(MiniDisplay C CXX ASM)
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
 
 # Set custom board file
 set(PICO_BOARD_HEADER_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/board")
@@ -10,6 +20,10 @@ set(PICO_BOARD mini_display)
 
 # Import Pico SDK
 include(pico_sdk_import.cmake)
+
+project(MiniDisplay C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 # Initialize the SDK
 pico_sdk_init()
@@ -62,7 +76,7 @@ target_include_directories(MiniDisplay PRIVATE
 
 pico_set_linker_script(MiniDisplay ${CMAKE_CURRENT_SOURCE_DIR}/custom_linker_script.ld)
 
-pico_set_program_name(MiniDisplay "Mini_Display")
+pico_set_program_name(MiniDisplay "MiniDisplay")
 pico_set_program_version(MiniDisplay "0.1")
 
 # Import pico_stdlib which imports commonly used features
