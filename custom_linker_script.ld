@@ -154,7 +154,11 @@ SECTIONS
         *(.binary_info.*)
     } > FLASH
     __binary_info_end = .;
-    . = ALIGN(4);    
+    . = ALIGN(4);
+
+    /* End of .text-like segments */
+    /* This is a test, to do it like before on RP2040 */
+    /*__etext = .;*/
 
     /* Custom section for mass storage data */
     .mass_storage : {
@@ -208,6 +212,7 @@ SECTIONS
     PROVIDE(__data_end__ = .);
 
     /* __etext is (for backwards compatibility) the name of the .data init source pointer (...) */
+    /* also defined above as a test */
     __etext = LOADADDR(.data);
 
     .tbss (NOLOAD) : {

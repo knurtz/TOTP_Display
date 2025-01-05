@@ -16,7 +16,7 @@ address_limit = 0
 filename = ""
 
 # Wait for source UF2 to fnish being written
-time.sleep(.2)
+time.sleep(.5)
 
 try:
     filename = sys.argv[1]

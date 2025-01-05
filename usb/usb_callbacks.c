@@ -33,8 +33,8 @@ void tud_cdc_rx_cb(uint8_t itf) {}
 // Fill vendor id, product id, revision with string up to 8, 16, 4 characters respectively
 void tud_msc_inquiry_cb(uint8_t lun, uint8_t vendor_id[8], uint8_t product_id[16], uint8_t product_rev[4])
 {
-  const char vid[] = "HE";
-  const char pid[] = "MiniPDisplay";
+  const char vid[] = "HER-ING";
+  const char pid[] = "MiniDisplay";
   const char rev[] = "0.1";
 
   memcpy(vendor_id,   vid, strlen(vid));

@@ -45,7 +45,7 @@ uint8_t msc_disk[DISK_SECTOR_NUM][DISK_SECTOR_SIZE] =
       0x01, 0x00,               // Reserved sectors: 1
       0x01,                     // Number of FATs: 1
       0x30, 0x00,               // Max. root directory entries: 48 (size of root directory table: 3 blocks)
-      0x00, 0x78,               // Total sectors: DISK_SECTOR_NUM -> 30720
+      0x00, 0x1F,               // Total sectors: DISK_SECTOR_NUM -> 7936
       0xF8,                     // Media descriptor
       0x0C, 0x00,               // Sectors per FAT: 12 -> yields 12 * 512 / 1,5 = 4096 entries for 4096 clusters
       

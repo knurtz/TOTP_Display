@@ -11,16 +11,16 @@
 #include "hardware.h"
 #include "shell.h"
 
-#include "lcd.h"
-#include "ui/bmp.h"
-#include "ui/font.h"
+//#include "lcd.h"
+//#include "ui/bmp.h"
+//#include "ui/font.h"
 
 uint32_t next_blink_ms = 0;
 uint16_t blink_interval_ms = 500;
 uint16_t blink_interval_fast_ms = 100;
 
-uint16_t colors[] = {RGB(255, 0, 0), RGB(255, 255, 0), RGB(0, 255, 0)};
-uint8_t color_index = 0;
+//uint16_t colors[] = {RGB(255, 0, 0), RGB(255, 255, 0), RGB(0, 255, 0)};
+//uint8_t color_index = 0;
 
 static void blink(void) {
     if (time_us_32() / 1000 > next_blink_ms) {

@@ -48,8 +48,8 @@ add_executable(MiniDisplay
     system/ui/font.c
 
     # Mass storage    
-    usb/msc_disk.c
-    usb/flash_functions.c
+    msc/msc_disk.c
+    msc/flash_functions.c
     
     # FatFS
     system/fat.c
@@ -63,7 +63,8 @@ add_executable(MiniDisplay
 )
 
 target_compile_definitions(MiniDisplay PRIVATE
-    
+    # bootloader activity LED
+    PICO_BOOTSEL_VIA_DOUBLE_RESET_ACTIVITY_LED=25
 )
 
 target_include_directories(MiniDisplay PRIVATE
@@ -71,18 +72,15 @@ target_include_directories(MiniDisplay PRIVATE
     hardware
     system
     usb
+    msc
     fatfs
 )
 
 pico_set_linker_script(MiniDisplay ${CMAKE_CURRENT_SOURCE_DIR}/custom_linker_script.ld)
 
-pico_set_program_name(MiniDisplay "MiniDisplay")
-pico_set_program_version(MiniDisplay "0.1")
-
 # Import pico_stdlib which imports commonly used features
 target_link_libraries(MiniDisplay 
     pico_stdlib
-    hardware_uart
     hardware_spi
     hardware_timer
     hardware_dma
@@ -91,13 +89,11 @@ target_link_libraries(MiniDisplay
     tinyusb_device
 )
 
-pico_enable_stdio_uart(MiniDisplay 0)
 pico_enable_stdio_usb(MiniDisplay 1)
+pico_enable_stdio_uart(MiniDisplay 0)
 
-target_compile_definitions(MiniDisplay PRIVATE
-    # bootloader activity LED
-    PICO_BOOTSEL_VIA_DOUBLE_RESET_ACTIVITY_LED=25
-)
+pico_set_program_name(MiniDisplay "MiniDisplay")
+pico_set_program_version(MiniDisplay "0.1")
 
 # Create map/bin/hex file etc.
 pico_add_extra_outputs(MiniDisplay)

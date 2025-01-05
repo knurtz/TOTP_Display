@@ -100,6 +100,8 @@ uint32_t Flash_WriteQueued(uint32_t lba, uint32_t offset, void* buffer, uint32_t
 
 void Flash_WriteStartSection(void)
 {
+    return;
+
     if (!flash_start_modified) return;
     //xprintf(" Write start section\n");
 
@@ -123,6 +125,8 @@ void Flash_WriteStartSection(void)
 
 void Flash_WriteCurrentSection(void)
 {
+    return;
+
     if (!modified_sectors) return;
     //xprintf(" Write section %d\n", current_section);
 
@@ -144,9 +148,11 @@ void Flash_WriteCurrentSection(void)
     modified_sectors = 0;
 }
 
-// Should be periodically called
+// Should be called periodically
 void Flash_WriteCycle(bool forced)
 {
+    return;
+
     if (!forced && time_us_32() / 1000 < last_write_time_ms + write_interval_ms) return;
     last_write_time_ms = time_us_32() / 1000;
 
