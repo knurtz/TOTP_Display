@@ -51,7 +51,7 @@
 #endif
 
 #ifndef PICO_FLASH_SIZE_BYTES
-#define PICO_FLASH_SIZE_BYTES (128 * 1024)     // reserve 128 kB for actual program, rest for mass storage
+#define PICO_FLASH_SIZE_BYTES (4 * 1024 * 1024)     // reserve 128 kB for actual program, rest for mass storage
 #endif
 
 // Drive high to force power supply into PWM mode (lower ripple on 3V3 at light loads)

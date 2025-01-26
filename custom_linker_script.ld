@@ -157,6 +157,7 @@ SECTIONS
     . = ALIGN(4);
 
     /* End of .text-like segments */
+    
     /* This is a test, to do it like before on RP2040 */
     /*__etext = .;*/
 

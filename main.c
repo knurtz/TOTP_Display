@@ -42,12 +42,13 @@ int main() {
     //Font_Init();
     //LCD_Init(HORIZONTAL);
     
-    while (1) {
+    while (1) 
+    {
+        blink();
+        
         tud_task();
         Shell_CheckCommand();
         Flash_WriteCycle(false);
-
-        blink();
     }
 
     return 1;
