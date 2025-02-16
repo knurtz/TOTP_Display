@@ -1,0 +1,3 @@
+[submodule "pico_msc"]
+	path = pico_msc
+	url = https://github.com/knurtz/pico_msc
