@@ -1,17 +1,3 @@
-# == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
-if(WIN32)
-    set(USERHOME $ENV{USERPROFILE})
-else()
-    set(USERHOME $ENV{HOME})
-endif()
-set(sdkVersion 2.1.0)
-set(toolchainVersion 13_3_Rel1)
-set(picotoolVersion 2.1.0)
-set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
-if (EXISTS ${picoVscode})
-    include(${picoVscode})
-endif()
-# ====================================================================================
 cmake_minimum_required(VERSION 3.12)
 
 # Set custom board file
@@ -46,20 +32,6 @@ add_executable(MiniDisplay
     # UI
     system/ui/bmp.c
     system/ui/font.c
-
-    # Mass storage    
-    msc/msc_disk.c
-    msc/flash_functions.c
-    
-    # FatFS
-    system/fat.c
-    fatfs/ff.c
-    fatfs/ffunicode.c
-    fatfs/diskio.c
-
-    # USB
-    usb/usb_descriptors.c
-    usb/usb_callbacks.c
 )
 
 target_compile_definitions(MiniDisplay PRIVATE
@@ -71,12 +43,11 @@ target_include_directories(MiniDisplay PRIVATE
     .
     hardware
     system
-    usb
-    msc
-    fatfs
 )
 
-pico_set_linker_script(MiniDisplay ${CMAKE_CURRENT_SOURCE_DIR}/custom_linker_script.ld)
+# Enable Pico MSC mass storage module
+include(pico_msc/pico_msc.cmake)
+enable_pico_msc(MiniDisplay)
 
 # Import pico_stdlib which imports commonly used features
 target_link_libraries(MiniDisplay 
@@ -87,6 +58,7 @@ target_link_libraries(MiniDisplay
     hardware_flash
     hardware_sync
     tinyusb_device
+    pico_msc
 )
 
 pico_enable_stdio_usb(MiniDisplay 1)
