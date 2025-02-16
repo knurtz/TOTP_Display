@@ -4,7 +4,7 @@
 #include "pico/stdlib.h"
 #include "hardware/timer.h"
 
-#include "pico_msc/pico_msc.h"
+#include "pico_msc.h"
 
 #include "hardware.h"
 #include "shell.h"
@@ -28,7 +28,8 @@ static void blink(void) {
 
 int main() {
     stdio_init_all();
-    tusb_init();            // todo: replace by PicoMSC_Init();
+
+    PicoMSC_Init();
 
     Hardware_Init();
     Shell_Init();
@@ -39,13 +40,10 @@ int main() {
     //Font_Init();
     //LCD_Init(HORIZONTAL);
     
-    while (1) 
-    {
+    while (1) {
         blink();
-        
-        tud_task();
         Shell_CheckCommand();
-        Flash_WriteCycle(false);
+        PicoMSC_Task();
     }
 
     return 1;
